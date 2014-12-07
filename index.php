@@ -91,7 +91,7 @@
         }
         else {
           $(".access").text("Login");
-          $(".access").attr('href','http://aunsuwijak.tk:8080/shipments/auth');
+          $(".access").attr('href','http://track-trace.tk:8080/shipments/auth');
         }
 
         var shipments;
@@ -101,7 +101,7 @@
 
           var xmlhttp = new XMLHttpRequest(); 
 
-          xmlhttp.open("GET","http://aunsuwijak.tk:8080/shipments",true);
+          xmlhttp.open("GET","http://track-trace.tk:8080/shipments",true);
           xmlhttp.setRequestHeader("Authorization",accessToken);
           xmlhttp.send();
 
@@ -121,7 +121,7 @@
                 "</option><option>" + statuses[3] +
                 "</option></select></center></div><div class=\"element\"><center>Total Cost : " + shipments[i].total_cost +
                 "</center></div><div class=\"detail\">Sender : " + shipments[i].courier_name + 
-                "<br>Reciever : " + shipments[i].recieve_name + 
+                "<br>Receiver : " + shipments[i].recieve_name + 
                 "</div></li>";
 
                 $(".shipments").append(str);
@@ -153,13 +153,13 @@
 
         };
 
-        var statuses = [ "created", "packed", "delivered", "recieved" ];
+        var statuses = [ "created", "packed", "delivered", "received" ];
 
         var saveStatus = function(shipment,option) {
 
           var xmlhttp = new XMLHttpRequest(); 
 
-          xmlhttp.open("PUT","http://aunsuwijak.tk:8080/shipments/"+shipment.id,true);
+          xmlhttp.open("PUT","http://track-trace.tk:8080/shipments/"+shipment.id,true);
           xmlhttp.setRequestHeader("Authorization",accessToken);
           xmlhttp.setRequestHeader("Content-Type","application/xml");
 
