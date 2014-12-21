@@ -47,6 +47,15 @@
       }
     </style>
   </head>
+  <?php
+   session_start(); //starts the session
+   if($_SESSION['user']){ // checks if the user is logged in  
+   }
+   else{
+      header("location: login.php"); // redirects if user is not logged in
+   }
+   $accessToken = $_SESSION['user']; //assigns user value
+   ?>
   <body>
 <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
@@ -74,9 +83,6 @@
 <ul class="shipments">
 
 </ul>
-    <?php 
-      $accessToken = $_GET['accessToken'];
-    ?>
     <script type="text/javascript">
 
       $(function() {
@@ -84,14 +90,14 @@
 
         if (accessToken) {
           $(".access").text("Logout");
-          $(".access").attr('href',"/web");
           $(".access").click(function() {
             accessToken = null;
           });
+          $(".access").attr('href',"/web-admin/logout.php");
         }
         else {
           $(".access").text("Login");
-          $(".access").attr('href','http://track-trace.tk:8080/shipments/auth');
+          $(".access").attr('href','/web-admin/login.php');
         }
 
         var shipments;
@@ -101,7 +107,7 @@
 
           var xmlhttp = new XMLHttpRequest(); 
 
-          xmlhttp.open("GET","http://track-trace.tk:8080/shipments",true);
+          xmlhttp.open("GET","http://158.108.233.11:8080/shipments",true);
           xmlhttp.setRequestHeader("Authorization",accessToken);
           xmlhttp.send();
 
@@ -121,7 +127,7 @@
                 "</option><option>" + statuses[3] +
                 "</option></select></center></div><div class=\"element\"><center>Total Cost : " + shipments[i].total_cost +
                 "</center></div><div class=\"detail\">Sender : " + shipments[i].courier_name + 
-                "<br>Receiver : " + shipments[i].recieve_name + 
+                "<br>Receiver : " + shipments[i].receive_name + 
                 "</div></li>";
 
                 $(".shipments").append(str);
@@ -153,7 +159,7 @@
 
         };
 
-        var statuses = [ "created", "packed", "delivered", "received" ];
+        var statuses = [ "Create", "Picked Up", "In Transit", "Received"];
 
         var saveStatus = function(shipment,option) {
 
